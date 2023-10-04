@@ -13,6 +13,28 @@ class BinaryTreeNode {
    * incomplete node-- that is, the length of the shortest path from the root to
    * a node with less than two children. */
   minDepthToIncompleteNode() {
+    // base case is if this.left or this.right is null
+    let toVisitQueue = [[this, 1]];
+
+    // toVisitQueue [barry, carol, carlos, connie]
+    while (toVisitQueue.length) {
+      let currentTuple = toVisitQueue.shift();
+      // current = consuela
+
+      if (currentTuple[0].left === null || currentTuple[0].right === null) {
+        // we found the shallowest incomplete node
+        return currentTuple[1];
+      }
+
+      if (currentTuple[0].left !== null) {
+        toVisitQueue.push([currentTuple[0].left, currentTuple[1] + 1])
+      }
+
+      if (currentTuple[0].right !== null) {
+        toVisitQueue.push([currentTuple[0].right, currentTuple[1] + 1])
+      }
+
+    }
 
   }
 
@@ -48,7 +70,8 @@ class BinaryTree {
   // this is a stack or recursion problem; we'll use recursion
 
   minDepthToIncompleteNode() {
-
+    if (this.root === null) { return 0; }
+    return this.root.minDepthToIncompleteNode();
   }
 
   /** maxDepth(): return the maximum depth of the tree -- that is,
